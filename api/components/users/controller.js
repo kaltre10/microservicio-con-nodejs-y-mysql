@@ -3,9 +3,17 @@ const TABLA = 'users';
 const bcrypt = require('bcrypt');
 // const { v4: uuidv4 } = require('uuid');
 
-module.exports = (injectedStore = require('../../../store/dummy')) => {
-    const list = () => {
-        return injectedStore.list(TABLA);
+module.exports = (injectedStore = require('../../../store/mysql'), injectedCache = require('../../../store/redis')) => {
+    const list = async () => {
+        let users = await injectedCache.list(TABLA); 
+        if(!users) {
+            console.log('No en cache, desde DB');
+            users = await injectedStore.list(TABLA);
+            await injectedCache.set(TABLA, users); 
+        }else{
+            console.log('Desde Cache!!!');
+        }
+        return users;
     }
 
     const get = (id) => {

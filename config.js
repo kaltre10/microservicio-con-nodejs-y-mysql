@@ -1,5 +1,8 @@
 module.exports = {
     remoteDB: process.env.REMOTE_DB || false,
+    redis: {
+        CONNECT: process.env.REDIS_CONNECT || 'rediss://red-cdlecgcgqg4a7d6cugbg:BPq5pqNk4kZaytdw3BY7WgXdagNd4wKo@oregon-redis.render.com:6379' 
+    },
     api: {
         PORT: process.env.PORT || 5000
     },
@@ -18,5 +21,9 @@ module.exports = {
     MysqlServices: {
         HOST: process.env.MYSQL_HOST || 'localhost',
         PORT: process.env.MYSQL_PORT || 3001
+    },
+    cacheServices: {
+        HOST: process.env.MYSQL_HOST || 'localhost',
+        PORT: process.env.MYSQL_PORT || 3003
     }
 }
